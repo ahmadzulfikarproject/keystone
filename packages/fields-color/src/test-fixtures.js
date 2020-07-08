@@ -72,7 +72,7 @@ export const filterTests = withKeystone => {
     )
   );
 
-  test(
+  test.skip(
     'Filter: hexColor (case-insensitive)',
     withKeystone(({ keystone }) =>
       match(keystone, { hexColor_i: 'rgba(50, 121, 206, 1)' }, [
@@ -94,7 +94,7 @@ export const filterTests = withKeystone => {
     )
   );
 
-  test(
+  test.skip(
     'Filter: hexColor_not_i (case-insensitive)',
     withKeystone(({ keystone }) =>
       match(keystone, { hexColor_not_i: 'rgba(50, 121, 206, 1)' }, [
@@ -204,7 +204,7 @@ export const filterTests = withKeystone => {
       ])
     )
   );
-  test(
+  test.skip(
     'Filter: hexColor_contains_i (case-insensitive)',
     withKeystone(({ keystone }) =>
       match(keystone, { hexColor_contains_i: 'rgba' }, [
@@ -237,7 +237,7 @@ export const filterTests = withKeystone => {
     )
   );
 
-  test(
+  test.skip(
     'Filter: hexColor_starts_with_i (case-insensitive)',
     withKeystone(({ keystone }) =>
       match(keystone, { hexColor_starts_with_i: 'rgba(50' }, [
@@ -258,7 +258,7 @@ export const filterTests = withKeystone => {
       ])
     )
   );
-  test(
+  test.skip(
     'Filter: hexColor_not_starts_with_i (case-insensitive)',
     withKeystone(({ keystone }) =>
       match(keystone, { hexColor_not_starts_with_i: 'rgba(50' }, [

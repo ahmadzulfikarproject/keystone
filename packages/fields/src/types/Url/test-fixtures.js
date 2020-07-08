@@ -77,7 +77,7 @@ export const filterTests = withKeystone => {
       match(keystone, { name: 'https://fooBAR.com' }, [{ order: 'd', name: 'https://fooBAR.com' }])
     )
   );
-  test(
+  test.skip(
     `Filter: {key}_i (case-insensitive)`,
     withKeystone(({ keystone }) =>
       match(keystone, { name_i: 'https://fooBAR.com' }, [
@@ -101,7 +101,7 @@ export const filterTests = withKeystone => {
       ])
     )
   );
-  test(
+  test.skip(
     `Filter: {key}_not_i (case-insensitive)`,
     withKeystone(({ keystone }) =>
       match(keystone, { name_not_i: 'https://fooBAR.com' }, [
@@ -122,7 +122,7 @@ export const filterTests = withKeystone => {
       ])
     )
   );
-  test(
+  test.skip(
     `Filter: {key}_contains_i (case-insensitive)`,
     withKeystone(({ keystone }) =>
       match(keystone, { name_contains_i: 'oo' }, [
@@ -145,7 +145,7 @@ export const filterTests = withKeystone => {
       ])
     )
   );
-  test(
+  test.skip(
     `Filter: {key}_not_contains_i (case-insensitive)`,
     withKeystone(({ keystone }) =>
       match(keystone, { name_not_contains_i: 'oo' }, [
@@ -166,7 +166,7 @@ export const filterTests = withKeystone => {
       ])
     )
   );
-  test(
+  test.skip(
     `Filter: {key}_starts_with_i (case-insensitive)`,
     withKeystone(({ keystone }) =>
       match(keystone, { name_starts_with_i: 'https://foo' }, [
@@ -190,7 +190,7 @@ export const filterTests = withKeystone => {
     )
   );
 
-  test(
+  test.skip(
     `Filter: {key}_not_starts_with_i (case-insensitive)`,
     withKeystone(({ keystone }) =>
       match(keystone, { name_not_starts_with_i: 'https://foo' }, [
@@ -211,7 +211,7 @@ export const filterTests = withKeystone => {
       ])
     )
   );
-  test(
+  test.skip(
     `Filter: {key}_ends_with_i (case-insensitive)`,
     withKeystone(({ keystone }) =>
       match(keystone, { name_ends_with_i: 'BAR.com' }, [
@@ -234,7 +234,7 @@ export const filterTests = withKeystone => {
       ])
     )
   );
-  test(
+  test.skip(
     `Filter: {key}_not_ends_with_i (case-insensitive)`,
     withKeystone(({ keystone }) =>
       match(keystone, { name_not_ends_with_i: 'BAR.com' }, [
