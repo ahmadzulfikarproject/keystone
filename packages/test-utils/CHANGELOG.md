@@ -1,5 +1,14 @@
 # @keystonejs/test-utils
 
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [[`d38c9174f`](https://github.com/keystonejs/keystone/commit/d38c9174f8146ad6e268be87cf5d54d5074bc593)]:
+  - @keystonejs/keystone@14.0.0
+  - @keystonejs/adapter-knex@11.0.2
+  - @keystonejs/adapter-mongoose@9.0.3
+
 ## 8.0.0
 
 ### Major Changes

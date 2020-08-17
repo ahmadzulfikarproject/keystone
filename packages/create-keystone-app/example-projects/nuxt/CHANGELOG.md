@@ -1,5 +1,15 @@
 # @keystonejs/example-projects-nuxt
 
+## 5.0.15
+
+### Patch Changes
+
+- Updated dependencies [[`d38c9174f`](https://github.com/keystonejs/keystone/commit/d38c9174f8146ad6e268be87cf5d54d5074bc593), [`fba90ac5d`](https://github.com/keystonejs/keystone/commit/fba90ac5db7328e952c44cb7c0bb8db76dd954b8), [`e8b2e4772`](https://github.com/keystonejs/keystone/commit/e8b2e477206acffb143f19fb14be1e3b4cd0eb91)]:
+  - @keystonejs/fields@17.0.0
+  - @keystonejs/keystone@14.0.0
+  - @keystonejs/app-admin-ui@7.3.2
+  - @keystonejs/adapter-mongoose@9.0.3
+
 ## 5.0.14
 
 ### Patch Changes

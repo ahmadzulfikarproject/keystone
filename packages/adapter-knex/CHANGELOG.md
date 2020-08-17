@@ -1,5 +1,13 @@
 # @keystonejs/adapter-knex
 
+## 11.0.2
+
+### Patch Changes
+
+- Updated dependencies [[`d38c9174f`](https://github.com/keystonejs/keystone/commit/d38c9174f8146ad6e268be87cf5d54d5074bc593)]:
+  - @keystonejs/fields-auto-increment@6.0.0
+  - @keystonejs/keystone@14.0.0
+
 ## 11.0.1
 
 ### Patch Changes
