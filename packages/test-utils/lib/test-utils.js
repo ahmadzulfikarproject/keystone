@@ -49,6 +49,8 @@ async function setupServer({
           .update(prismaSchema)
           .digest('hex')
           .slice(0, 16),
+      // Turn this on if you need verbose debug info
+      enableLogging: false,
     }),
   }[adapterName];
 

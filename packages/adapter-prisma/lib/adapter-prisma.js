@@ -11,15 +11,17 @@ class PrismaAdapter extends BaseKeystoneAdapter {
     super(...arguments);
     this.name = 'prisma';
     this.listAdapterClass = this.listAdapterClass || this.defaultListAdapterClass;
+
     this.getClientPath = this.config.getClientPath || (() => '.prisma');
     this.getSchemaName = this.config.getSchemaName || (() => 'public');
+    this.enableLogging = this.config.enableLogging || false;
   }
 
   async _connect({ rels }) {
     await this._generateClient(rels);
     const { PrismaClient } = require(this.clientPath);
     this.prisma = new PrismaClient({
-      // log: ['query'],
+      log: this.enableLogging && ['query'],
       datasources: { postgresql: { url: `${process.env.DATABASE_URL}?schema=${this.schemaName}` } },
     });
   }
