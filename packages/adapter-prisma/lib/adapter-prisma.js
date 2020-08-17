@@ -20,9 +20,16 @@ class PrismaAdapter extends BaseKeystoneAdapter {
   async _connect({ rels }) {
     await this._generateClient(rels);
     const { PrismaClient } = require(this.clientPath);
+    // By default we put `schema=public` onto all `DATABASE_URL` values.
+    // If this isn't what a user wants, they can update `getSchemaName` to return either
+    // a different schemaName, or null if they just want to use the DATABASE_URL as it is.
+    // TODO: Should we default to 'public' or null?
+    const url = this.schemaName
+      ? `${process.env.DATABASE_URL}?schema=${this.schemaName}`
+      : process.env.DATABASE_URL;
     this.prisma = new PrismaClient({
       log: this.enableLogging && ['query'],
-      datasources: { postgresql: { url: `${process.env.DATABASE_URL}?schema=${this.schemaName}` } },
+      datasources: { postgresql: { url } },
     });
   }
 
@@ -180,11 +187,12 @@ class PrismaAdapter extends BaseKeystoneAdapter {
 
   disconnect() {
     this.prisma.$disconnect();
-    delete this.prisma;
-    Object.values(this.listAdapters).forEach(listAdapter => {
-      delete listAdapter.prisma;
-    });
-    delete require.cache[require.resolve(this.clientPath)];
+    // Everything below here is being cleaned up in an attempt to help out the garbage collector
+    // delete this.prisma;
+    // Object.values(this.listAdapters).forEach(listAdapter => {
+    //   delete listAdapter.prisma;
+    // });
+    // delete require.cache[require.resolve(this.clientPath)];
   }
 
   getDefaultPrimaryKeyConfig() {
