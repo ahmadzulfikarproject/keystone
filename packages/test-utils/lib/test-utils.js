@@ -1,3 +1,5 @@
+const path = require('path');
+const crypto = require('crypto');
 const express = require('express');
 const supertest = require('supertest-light');
 const MongoDBMemoryServer = require('mongodb-memory-server-core').default;
@@ -29,7 +31,25 @@ async function setupServer({
           process.env.DATABASE_URL || process.env.KNEX_URI || 'postgres://localhost/keystone',
       },
     }),
-    prisma: () => ({ dropDatabase: true }),
+    prisma: () => ({
+      dropDatabase: true,
+      // Put the generated client at a unique path
+      getClientPath: prismaSchema =>
+        path.join(
+          '.api-test-prisma-clients',
+          crypto
+            .createHash('sha256')
+            .update(prismaSchema)
+            .digest('hex')
+        ),
+      // Slice down to the hash make a valid postgres schema name
+      getSchemaName: prismaSchema =>
+        crypto
+          .createHash('sha256')
+          .update(prismaSchema)
+          .digest('hex')
+          .slice(0, 16),
+    }),
   }[adapterName];
 
   const keystone = new Keystone({

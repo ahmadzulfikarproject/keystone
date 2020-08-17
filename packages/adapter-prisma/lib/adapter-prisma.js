@@ -1,4 +1,3 @@
-const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const execa = require('execa');
@@ -7,17 +6,17 @@ const { resolveBinary, getGenerators } = require('@prisma/sdk');
 const { BaseKeystoneAdapter, BaseListAdapter, BaseFieldAdapter } = require('@keystonejs/keystone');
 const { escapeRegExp, defaultObj, mapKeys, identity, flatten } = require('@keystonejs/utils');
 
-const BASE = '.api-test-prisma-clients';
-
 class PrismaAdapter extends BaseKeystoneAdapter {
   constructor() {
     super(...arguments);
     this.name = 'prisma';
     this.listAdapterClass = this.listAdapterClass || this.defaultListAdapterClass;
+    this.getClientPath = this.config.getClientPath || (() => '.prisma');
+    this.getSchemaName = this.config.getSchemaName || (() => 'public');
   }
 
   async _connect({ rels }) {
-    this.clientPath = await this._generateClient(rels);
+    await this._generateClient(rels);
     const { PrismaClient } = require(this.clientPath);
     this.prisma = new PrismaClient({
       // log: ['query'],
@@ -36,31 +35,24 @@ class PrismaAdapter extends BaseKeystoneAdapter {
       })
     ).stdout;
 
-    // Compute the hash
-    const hash = crypto
-      .createHash('sha256')
-      .update(prismaSchema)
-      .digest('hex');
-
-    // Slice down to make a valid postgres schema name
-    this.schemaName = hash.slice(0, 16);
+    this.schemaName = this.getSchemaName(prismaSchema);
 
     // See if there is a prisma client available for this hash
-    const clientPath = path.join(BASE, hash);
+    const clientPath = this.getClientPath(prismaSchema);
     if (!fs.existsSync(clientPath)) {
-      // mkdir
+      // Make output dir
       fs.mkdirSync(clientPath, { recursive: true });
 
-      // write prisma file
+      // Write prisma file
       const schemaPath = path.join(clientPath, 'schema.prisma');
       fs.writeSync(fs.openSync(schemaPath, 'w'), prismaSchema);
 
-      // generate prisma client
+      // Generate prisma client
       const generator = (await getGenerators({ schemaPath }))[0];
       await generator.generate();
       generator.stop();
     }
-    return path.resolve(`${clientPath}/${clientDir}`);
+    this.clientPath = path.resolve(`${clientPath}/${clientDir}`);
   }
 
   _generatePrismaSchema(rels, clientDir) {
